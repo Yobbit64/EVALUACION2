@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Cliente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="card shadow mx-auto" style="max-width: 700px;">
+        <div class="card-header bg-info text-white">
+            <h3 class="mb-0 text-center">Buscar Cliente</h3>
+        </div>
+        <div class="card-body">
+            <!-- Formulario donde se envian los datos a la vista buscar_cliente mediante GET -->
+            <form method="get" action="{% url 'buscar_cliente' %}">
+                <div class="input-group mb-4">
+                    <input type="text" name="rut" class="form-control" placeholder="Ingrese el RUT (Ej: 12345678-9)" required>
+                    <!-- El botón envía los datos una vez ejecutado -->
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                </div>
+            </form>
+
+            <!-- Resultados de la búsqueda anterior -->
+            <!-- Esta condicional verifica verifica primero si el parámetro RUT es válido -->
+            {% if request.GET.rut %}
+                <!-- Si se devuelve un objeto cliente, muestra un mensaje de éxito -->
+                {% if cliente %}
+                    <div class="alert alert-success">
+                        <!-- Imprime un mensaje con el nombre y apellidos del cliente encontrado -->
+                        <strong>Cliente encontrado:</strong> {{ cliente.nombre }} {{ cliente.apellidos }}
+                    </div>
+                    
+                    <h5 class="mt-4">Vehículos Asociados:</h5>
+                    <!-- Verifica que hayan datos en la variable vehiculos -->
+                    {% if vehiculos %}
+                        <ul class="list-group">
+                            <!-- El bucle recorre e imprime una lista de vehículos asociados al cliente concreto -->
+                            {% for v in vehiculos %}
+                                <li class="list-group-item">{{ v.marca }} {{ v.modelo }} (Año: {{ v.anio }})</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <!-- Si existe el cliente, pero no tiene vehículos a su nombre -->
+                        <p class="text-muted">Este cliente no tiene vehículos registrados.</p>
+                    {% endif %}
+                {% else %}
+                    <!-- Alerta de error si es que el RUT no devuelve ningún cliente -->
+                    <div class="alert alert-danger">
+                        No se encontró ningún cliente con el RUT ingresado.
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            <div class="text-center mt-4">
+                <a href="{% url 'index' %}" class="btn btn-secondary">Volver al Menú Principal</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

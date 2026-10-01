@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automotora - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <!-- Carga la imagen dentro del archivo static -->
+        <img src="{% static 'gestion/img/automotora_1700X680.jpg' %}" alt="Logo Automotora" class="img-fluid rounded-circle mb-3">
+        <!-- Saluda al usuario con el nombre y apellidos asociados al user -->
+        <h2>Bienvenido, {{ usuario.first_name }} {{ usuario.last_name }}</h2>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="list-group shadow">
+                <!-- URLs que redirigen a las diferentes vistas -->
+                <a href="{% url 'agregar_cliente_vehiculo' %}" class="list-group-item list-group-item-action">Agregar un cliente y su vehículo(s)</a>
+                <a href="{% url 'agregar_venta' %}" class="list-group-item list-group-item-action">Agregar un vehículo vendido</a>
+                <a href="{% url 'listar_clientes_vehiculos' %}" class="list-group-item list-group-item-action">Listar los clientes y vehículos</a>
+                <a href="{% url 'buscar_cliente' %}" class="list-group-item list-group-item-action">Buscar un cliente (por RUT)</a>
+                <a href="{% url 'listar_ventas' %}" class="list-group-item list-group-item-action">Listar los vehículos vendidos</a>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <!-- Al hacer click en el botón, finaliza la sesión del usuario y lo redirige a la página de inicio de sesión -->
+        <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar Sesión</a>
+    </div>
+</div>
+
+</body>
+</html>

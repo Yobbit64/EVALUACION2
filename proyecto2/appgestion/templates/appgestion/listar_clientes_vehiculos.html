@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes y Vehículos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Listado de Clientes y sus Vehículos</h2>
+    
+    <div class="table-responsive shadow">
+        <!-- Tabla estilizada -->
+        <table class="table table-striped table-hover align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>RUT Cliente</th>
+                    <th>Nombre Completo</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Año</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Bucle para iterar sobre todos los vehículos de la base de datos -->
+                {% for vehiculo in vehiculos %}
+                <tr>
+                    <!-- Imprime los datos del cliente asociado al vehículo (con la clave foránea) -->
+                    <td>{{ vehiculo.cliente.rut }}</td>
+                    <td>{{ vehiculo.cliente.nombre }} {{ vehiculo.cliente.apellidos }}</td>
+                    <td>{{ vehiculo.marca }}</td>
+                    <td>{{ vehiculo.modelo }}</td>
+                    <td>{{ vehiculo.anio }}</td>
+                    <td>
+                        <!-- Botón para eliminar vehículo, el cual abre una ventana de confirmación antes de ejecutar el borrado -->
+                        <a href="{% url 'eliminar_vehiculo' vehiculo.id_vehiculo %}" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este vehículo?');">Eliminar</a>
+                    </td>
+                </tr>
+                <!-- La etiqueta define lo que se debe mostrar en caso de no existir registros -->
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-4">No hay vehículos registrados en el sistema.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="text-center mt-4">
+        <a href="{% url 'index' %}" class="btn btn-secondary">Volver al Menú Principal</a>
+    </div>
+</div>
+</body>
+</html>

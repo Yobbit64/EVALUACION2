@@ -1,0 +1,2 @@
+RUT: 11111111-1
+Clave: miclavesegura
